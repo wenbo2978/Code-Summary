@@ -1,0 +1,17 @@
+class Solution {
+    public int findMaxK(int[] nums) {
+        Arrays.sort(nums);
+        int r = nums.length - 1;
+        int l = 0;
+        while(r > l){
+            if(nums[r] == (-1) * nums[l])
+                return nums[r];
+            else if(nums[r] > (-1) * nums[l]){
+                r --;
+            }else{
+                l ++;
+            }
+        }
+        return -1;
+    }
+}

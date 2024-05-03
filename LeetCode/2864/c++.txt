@@ -1,0 +1,27 @@
+class Solution {
+public:
+    string maximumOddBinaryNumber(string s) {
+        if(s.size() == 1)
+            return s;
+        int st = 0, ed = s.size() - 1;
+        int l = s.size();
+        char tmp;
+        while(st < ed){
+            while(st < ed && s[st] == '1'){
+                st ++;
+            }
+            while(ed > st && s[ed] == '0'){
+                ed --;
+            }
+            //printf("%d %d\n", st, ed);
+            tmp = s[st];
+            s[st] = s[ed];
+            s[ed] = tmp;
+        }
+        
+        tmp = s[st - 1];
+        s[st - 1] = s[l - 1];
+        s[l - 1] = tmp;
+        return s;
+    }
+};

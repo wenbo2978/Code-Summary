@@ -1,0 +1,72 @@
+class Solution {
+public:
+
+    int getCost(priority_queue<int, vector<int>, greater<int>>& ft, 
+    priority_queue<int, vector<int>, greater<int>>& bk, int &flag){
+        
+        int ans;
+        if(ft.empty()){
+            flag = 1;
+            ans = bk.top();
+            bk.pop();
+            return ans;
+        }
+        if(bk.empty()){
+            flag = 0;
+            ans = ft.top();
+            ft.pop();
+            return ans;
+        }
+        if(ft.top() <= bk.top()){
+            flag = 0;
+            ans = ft.top();
+            ft.pop();
+        }else{
+            flag = 1;
+            ans = bk.top();
+            bk.pop();
+        }
+        return ans;
+    }
+
+    long long totalCost(vector<int>& costs, int k, int candidates) {
+        int flag = 0;
+        long long ans = 0;
+        priority_queue<int, vector<int>, greater<int>> ft, bk;
+        int st = 0, ed = costs.size() - 1;
+        for(int i = 0; i < candidates; i ++){
+            ft.push(costs[i]);
+            st ++;
+        }
+        st --;
+
+        for(int i = 0; i < candidates; i ++){
+            if(ed == st)
+                break;
+            bk.push(costs[ed]);
+            ed --;
+        }
+        ed ++;
+        //printf("------%d %d\n", st,ed);
+        ans += getCost(ft, bk, flag);
+        //printf("%d %d\n", ft.size(), bk.size());
+        
+
+        for(int i = 1; i < k; i ++){
+            if(flag == 0){
+                if(st + 1 < ed){
+                    st ++;
+                    ft.push(costs[st]);
+                }
+                ans += getCost(ft, bk, flag);
+            }else{
+                if(ed -1 > st){
+                    ed --;
+                    bk.push(costs[ed]);
+                }
+                ans += getCost(ft, bk, flag);
+            }
+        }
+        return ans;
+    }
+};

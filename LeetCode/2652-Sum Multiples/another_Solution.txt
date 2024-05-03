@@ -1,0 +1,20 @@
+namespace {
+constexpr array<int, 1024> generate_som() {
+    array<int, 1024> ans = {};
+    int sum = 0;
+    for (int i = 1; i < size(ans); ++i) {
+        if (!(i % 3) || !(i % 5) || !(i % 7)) sum += i;
+        ans[i] = sum;
+    }
+    return ans;
+}
+
+constexpr array<int, 1024> som = generate_som();
+}  // namespace
+
+class Solution {
+public:
+    static int sumOfMultiples(int n) {
+        return som[n];
+    }
+};

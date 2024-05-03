@@ -1,0 +1,32 @@
+class Solution {
+public:
+    int equalPairs(vector<vector<int>>& grid) {
+        int ans = 0;
+        map<vector<int>, int> mp;
+        for(int i = 0; i < grid[0].size(); i ++){
+            if(mp.find(grid[i]) == mp.end()){
+                mp.insert(pair<vector<int>, int>(grid[i], 1));
+            }else{
+                mp[grid[i]] ++;
+            }
+        }
+        int tmp;
+        for(int i = 0; i < grid[0].size(); i ++){
+            for(int j = i; j < grid[0].size(); j ++){
+                tmp = grid[i][j];
+                grid[i][j] = grid[j][i];
+                grid[j][i] = tmp;
+            }
+        }
+
+        for(int i = 0; i < grid[0].size(); i ++){
+            if(mp.find(grid[i]) != mp.end()){
+                if(mp[grid[i]] > 0){
+                    
+                    ans +=mp[grid[i]] ;
+                }
+            }
+        }
+        return ans;
+    }
+};
