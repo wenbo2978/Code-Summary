@@ -1,0 +1,72 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode deleteDuplicates(ListNode head) {
+        if(head == null || head.next == null)
+            return head;
+        ListNode res = new ListNode();
+        ListNode preNode = new ListNode();
+        
+        res.next = head;
+        boolean isdup = false;
+        int currentValue = 0;
+        while(res != null && res.next != null){
+            if(isdup == true){
+                if(res.next.val == currentValue){
+                    res.next = res.next.next;
+                }else{
+                    isdup = false;
+                    //preNode = preNode.next;
+                }
+            }else{
+                ListNode next = res.next.next;
+                ListNode current = res.next;
+                if(next == null)
+                    break;
+                if(current.val == next.val){
+                    isdup = true;
+                    currentValue = current.val;
+                    preNode.next = next.next;
+                }else{
+                    break;
+                }
+            }
+            
+        }
+        preNode =res;
+
+        while(preNode != null && preNode.next != null){
+            if(isdup == true){
+                if(preNode.next.val == currentValue){
+                    preNode.next = preNode.next.next;
+                }else{
+                    isdup = false;
+                    //preNode = preNode.next;
+                }
+            }else{
+                ListNode next = preNode.next.next;
+                ListNode current = preNode.next;
+                if(next == null)
+                    break;
+                if(current.val == next.val){
+                    isdup = true;
+                    currentValue = current.val;
+                    preNode.next = next.next;
+                }else{
+                    preNode = preNode.next;
+                }
+            }
+            
+        }
+        
+        return res.next;
+    }
+}

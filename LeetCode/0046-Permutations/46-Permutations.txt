@@ -1,0 +1,32 @@
+class Solution {
+public:
+
+    void swap(int &a,int &b){
+        int t;
+        t = a;
+        a=b;
+        b=t;
+    }
+
+    void backTrack(vector<vector<int>>& ans,vector<int>& nums,int t){
+        if(t>=nums.size() - 1){
+            vector<int> tmp;
+            for(int j = 0; j < nums.size(); j ++){
+                tmp.push_back(nums[j]);
+            }
+            ans.push_back(tmp);
+        }else{
+            for(int i=t;i<nums.size();i++){
+                swap(nums[t],nums[i]);
+                backTrack(ans, nums, t+1);
+                swap(nums[t],nums[i]);
+            }
+	}
+} 
+
+    vector<vector<int>> permute(vector<int>& nums) {
+        vector<vector<int>> ans;
+        backTrack(ans, nums, 0);
+        return ans;
+    }
+};

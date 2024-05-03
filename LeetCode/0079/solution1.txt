@@ -1,0 +1,37 @@
+class Solution {
+public:
+
+    bool backtrack(int row, int col, int irow, int icol, string word, vector<vector<char>>& board, int index){
+        if(index == word.size())
+            return true;
+        if(irow >= row || irow < 0 || icol >= col || icol < 0 || board[irow][icol] != word[index])
+            return false;
+        
+
+        char ch = board[irow][icol];
+        board[irow][icol] = '#';
+
+        bool upSearch = backtrack(row, col, irow - 1, icol, word, board, index + 1);
+        bool downSearch = backtrack(row, col, irow + 1, icol, word, board, index + 1);
+        bool rightSearch = backtrack(row, col, irow, icol + 1, word, board, index + 1);
+        bool leftSearch = backtrack(row, col, irow, icol - 1, word, board, index + 1);
+
+        board[irow][icol] = ch;
+
+        return upSearch || downSearch || rightSearch || leftSearch;
+    }
+
+    bool exist(vector<vector<char>>& board, string word) {
+        //bool ifexist = false;
+        int row = board.size();
+        int col = board[0].size();
+        
+        for(int i = 0; i < row; i ++){
+            for(int j = 0; j < col; j ++){
+                if(backtrack(row, col, i, j, word, board, 0))
+                    return true;
+            }
+        }
+        return false;
+    }
+};
