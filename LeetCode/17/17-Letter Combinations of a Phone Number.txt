@@ -1,0 +1,34 @@
+class Solution {
+public:
+
+    void backTrack(vector<string> &ans, string digits, int index, string &str, map<char,string> mp){
+        if(index == digits.size()){
+            if(str!="")
+                ans.push_back(str);
+        }else{
+            string tmp = mp[digits[index]];
+            for(int i = 0; i < tmp.size(); i ++){
+                str += tmp[i];
+                backTrack(ans, digits, index + 1, str, mp);
+                str.pop_back();
+            }
+        }
+
+    }
+
+    vector<string> letterCombinations(string digits) {
+        vector<string> ans;
+        map<char,string> mp;
+        string str = "";
+        mp.insert(pair<char, string>('2', "abc"));
+        mp.insert(pair<char, string>('3', "def"));
+        mp.insert(pair<char, string>('4', "ghi"));
+        mp.insert(pair<char, string>('5', "jkl"));
+        mp.insert(pair<char, string>('6', "mno"));
+        mp.insert(pair<char, string>('7', "pqrs"));
+        mp.insert(pair<char, string>('8', "tuv"));
+        mp.insert(pair<char, string>('9', "wxyz"));
+        backTrack(ans, digits, 0, str, mp);
+        return ans;
+    }
+};
