@@ -1,0 +1,35 @@
+class Solution {
+public:
+
+    static bool comp(int l, int r){
+        return l < r;
+    }
+
+    vector<int> successfulPairs(vector<int>& spells, vector<int>& potions, long long success) {
+        vector<int> ans(spells.size(), 0);
+        sort(potions.begin(), potions.end(), comp);
+        int n = 0;
+        int st = 0, ed = potions.size() - 1;
+        int md = st + (ed- st) / 2;
+        long long res;
+        for(int i = 0; i < spells.size(); i ++){
+            st = 0, ed = potions.size() - 1;
+            while(st < ed){
+                md = st + (ed- st) / 2;
+                res = (long long)potions[md] * (long long)spells[i];
+                if(res < success){
+                    st = md + 1;
+                }else{
+                    ed = md;
+                }
+
+            }
+            res = (long long) potions[st] * (long long)spells[i];
+            if(res >= success){
+                ans[i] = potions.size() - st;
+            }
+        
+        }
+        return ans;
+    }
+};

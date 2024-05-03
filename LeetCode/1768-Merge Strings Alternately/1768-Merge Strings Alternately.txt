@@ -1,0 +1,19 @@
+class Solution {
+public:
+    string mergeAlternately(string word1, string word2) {
+       string ans = "";
+       int n = 0;
+       for(int i = 0, j = 0; i < word1.size() && j < word2.size(); i ++, j ++){
+           n ++;
+           ans.push_back(word1[i]);
+           ans.push_back(word2[j]);
+       }
+       for(int i = n; i < word1.size(); i ++){
+           ans.push_back(word1[i]);
+       }
+       for(int j = n; j < word2.size(); j ++){
+           ans.push_back(word2[j]);
+       }
+       return ans; 
+    }
+};

@@ -1,0 +1,36 @@
+class Solution {
+    public int[][] findFarmland(int[][] land) {
+        int row = land.length;
+        int col = land[0].length;
+        //int k = 0;
+        ArrayList<int[]> ans = new ArrayList<>();
+        for(int i = 0; i < row; i ++){
+            for(int j = 0; j < col; j ++){
+                if(land[i][j] == 1){
+                    //k ++;
+                    int[] lot = new int[4];
+                    lot[0] = i;
+                    lot[1] = j;
+                    lot[2] = i;
+                    lot[3] = j;
+                    deepSearch(land, row, col, i, j, i, j, lot);
+                    ans.add(lot);
+                }
+            }
+        }
+        //System.out.println(k);
+        return ans.toArray(new int[ans.size()][]);
+    }
+    public void deepSearch(int[][] land, int row, int col, int sti, int stj, int edi, int edj, int[] lot){
+        if(edi >= row || edj >= col || land[edi][edj] != 1)
+            return;
+        land[edi][edj] = -1;
+        if(lot[2] < edi)
+            lot[2] = edi;
+        if(lot[3] < edj)
+            lot[3] = edj;
+        deepSearch(land, row, col, sti, sti, edi, edj + 1, lot);
+        deepSearch(land, row, col, sti, sti, edi + 1, edj, lot);
+
+    }
+}

@@ -1,0 +1,41 @@
+class Solution {
+public:
+    int countPalindromicSubsequence(string s) {
+        int res = 0;
+        map<char,int> mpleft, mpright;
+        map<string, int> mpres;
+        for(int i = 1; i < s.size(); i ++){
+            mpright[s[i]] ++;
+        }
+        /*for(auto& x : mpright){
+            printf("%c : %d\n", x.first, x.second);
+        }*/
+        //printf("---------\n");
+        char ct = s[0];
+        char left;
+        int index = 1;
+        string tmp = "";
+        while(index < s.size() - 1){
+            left = ct;
+            ct = s[index];
+            mpleft[left] ++;
+            index++;
+            mpright[ct]--;
+            for(auto& x: mpleft){
+                if(mpright[x.first] > 0){
+                    //res ++;
+                    tmp = "";
+                    tmp.push_back(x.first);
+                    tmp.push_back(ct);
+                    tmp.push_back(x.first);
+                    //cout << tmp << endl;
+                    mpres[tmp] = 1;
+                }
+            }
+            if(mpres.size() >= 26 * 26){
+                break;
+            }
+        }
+        return mpres.size();
+    }
+};

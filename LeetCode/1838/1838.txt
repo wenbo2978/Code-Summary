@@ -1,0 +1,31 @@
+class Solution {
+public:
+    int maxFrequency(vector<int>& nums, int k) {
+        if(nums.size() == 1){
+            return 1;
+        }
+        //long long int g = 0;
+        long long int restTime = k;
+        int freNum = nums[0];
+        int res = 1;
+        int left = 0, right = 0;
+        sort(nums.begin(), nums.end());
+        while(1){
+            if(restTime >= 0){
+                right ++;
+                //g = (nums[right] - nums[right - 1]) * (right - left);
+                restTime -= (long long int)(nums[right] - nums[right - 1]) * (right - left);
+                if(restTime >= 0)
+                    res = max(res, right - left + 1);
+            }else{
+                left ++;
+                restTime += (nums[right] - nums[left - 1]);
+            }
+            if((right == nums.size() - 1) && restTime >= 0){
+                printf("%d %d\n", left, right);
+                break;
+            }
+        }
+        return res;
+    }
+};
