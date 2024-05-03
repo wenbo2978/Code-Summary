@@ -1,0 +1,33 @@
+https://juejin.cn/post/7137726283005296677
+
+class Solution {
+    public List<List<String>> groupAnagrams(String[] strs) {
+        int index = 0;
+        List<List<String>> res = new ArrayList<>();
+        Map<String, Integer> map = new HashMap<>();
+        for(int i = 0; i < strs.length; i ++){
+            String temp = stringFlag(strs[i]);
+            if(map.containsKey(temp)){
+                int pos = map.get(temp);
+                res.get(pos).add(strs[i]);
+            }else{
+                map.put(temp, index);
+                index ++;
+                res.add(new ArrayList<String>());
+                res.get(index - 1).add(strs[i]);
+                System.out.println("add new");
+            }
+        }
+        return res;
+    }
+
+    public String stringFlag(String str){
+        System.out.println(str);
+        int[] res = new int[26];
+        for(int i = 0; i < str.length(); i ++){
+            res[str.charAt(i) - 'a'] ++;
+        }
+        
+        return Arrays.toString(res);
+    }
+}
