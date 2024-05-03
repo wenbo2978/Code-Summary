@@ -1,0 +1,43 @@
+class Solution {
+public:
+    bool canJump(vector<int>& nums) {
+        if(nums.size()==1) return true;
+        int maxIcanGo = nums[0] + 0;
+        int target = nums.size() - 1;
+        for(int i=1;i<nums.size() && maxIcanGo>=i;i++) {
+            maxIcanGo = max(maxIcanGo, nums[i] + i);
+            if(target<=maxIcanGo) {
+                return true;
+            }
+        }
+        return false;
+    }
+};
+
+//
+
+class Solution {
+public:
+    bool canArrive(vector<int>& nums, int lastPos, vector<int>& rd){
+        if(lastPos == 0)
+            return true;
+        for(int i = lastPos - 1; i >= 0; i --){
+            if(nums[i] >= lastPos - i && rd[i] != 0){
+                //printf("%d\n", i);
+                if(canArrive(nums, i, rd)){
+                    return true;
+                }else{
+                    rd[i] = 0;
+                }
+                    
+            }
+        }
+        return false;
+    }
+    bool canJump(vector<int>& nums) {
+        vector<int> rd(nums.size(), 1);
+        if(canArrive(nums, nums.size() - 1, rd))
+            return true;
+        return false;
+    }
+};
