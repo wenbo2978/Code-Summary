@@ -1,0 +1,43 @@
+class Solution {
+public:
+    int compress(vector<char>& chars) {
+        int numd = 0;
+        int ans = 0;
+        int n = chars.size();
+        int numrepeat = 1;
+        for(int i = 1; i < n; i ++){
+            if(chars[i] == chars[i-1]){
+                numrepeat ++;
+            }else{
+                if(numrepeat == 1){
+                    chars[ans] = chars[i - 1];
+                    ans ++;
+                    numrepeat = 1;
+                }else{
+                    chars[ans] = chars[i - 1];
+                    string c = to_string(numrepeat);
+                    for(int k = 0; k < c.size(); k ++){
+                        chars[ans + 1 + k] = c[k];
+                    }
+                    ans += c.size() +1;
+                    numrepeat = 1;
+                }
+            }
+        }
+
+        if(numrepeat == 1){
+            chars[ans] = chars[n-1];
+            ans ++;
+            numrepeat = 1;
+        }else{
+            chars[ans] = chars[n-1];
+            string c = to_string(numrepeat);
+            for(int k = 0; k < c.size(); k ++){
+                chars[ans + 1 + k] = c[k];
+            }
+            ans += c.size() +1;
+            numrepeat = 1;
+        }
+        return ans;
+    }
+};

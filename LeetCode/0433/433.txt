@@ -1,0 +1,38 @@
+class Solution {
+    public int minMutation(String startGene, String endGene, String[] bank) {
+        Queue<String> q = new LinkedList<>();
+        Map<String, Integer> map = new HashMap<>();
+        int step = geneCompare(startGene, endGene);
+        if(step < 1)
+            return step;
+        step = 0;
+        map.put(startGene, 0);
+        q.offer(startGene);
+        while(!q.isEmpty()){
+            String temp = q.poll();
+            int access = geneCompare(temp, endGene);
+            if(access == 0)
+                return map.get(temp);
+            /*if(access == 1)
+                return map.get(temp) + 1;*/
+            for(int i = 0; i < bank.length; i ++){
+                if(geneCompare(temp, bank[i]) == 1){
+                    if(!map.containsKey(bank[i])){
+                        map.put(bank[i], map.get(temp) + 1);
+                        q.offer(bank[i]);
+                    }
+                }
+            }
+        }
+        return -1;
+    }
+
+    public int geneCompare(String startGene, String endGene){
+        int step = 0;
+        for(int i = 0; i < startGene.length(); i ++){
+            if(startGene.charAt(i) != endGene.charAt(i))
+                step ++;
+        }
+        return step;
+    }
+}

@@ -1,0 +1,22 @@
+class Solution {
+public:
+    void moveZeroes(vector<int>& nums) {
+        int zp = 0, np = 0;
+        int tmp;
+        for(int i = 0; i < nums.size(); i ++){
+            if(nums[np] == 0){
+                np ++;
+            }else if(nums[zp] != 0){
+                zp ++;
+                np ++;
+            }else{
+                tmp = nums[zp];
+                nums[zp] = nums[np];
+                nums[np] = tmp;
+                zp++;
+                np++;
+            }
+        }
+  
+    }
+};

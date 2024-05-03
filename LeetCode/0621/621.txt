@@ -1,0 +1,17 @@
+class Solution {
+public:
+    int leastInterval(vector<char>& tasks, int n) {
+        vector<int> fre(26, 0);
+        for(int i = 0; i < tasks.size(); i ++){
+            fre[tasks[i] - 'A'] ++;
+        }
+        sort(fre.begin(), fre.end());
+        int chunk = fre[25] - 1;
+        int idel = chunk * n;
+        for(int i = 24; i >= 0; i --){
+            idel -= min(chunk, fre[i]);
+        }
+        return idel < 0 ? tasks.size() : tasks.size() + idel;
+        return 0;
+    }
+};

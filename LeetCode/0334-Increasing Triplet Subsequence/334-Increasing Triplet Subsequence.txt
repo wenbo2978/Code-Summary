@@ -1,0 +1,39 @@
+class Solution {
+public:
+    bool increasingTriplet(vector<int>& nums) {
+       int ii = 0, jj = -1;
+       int tmpii = -1;
+       for(int i = 0; i < nums.size(); i ++){
+           if(jj != -1 && nums[i] > nums[jj]){
+               //printf("%d %d %d\n", ii ,jj, i);
+               return true;
+           }else{
+               if(jj == -1){
+                   if(nums[i] <= nums[ii]){
+                       ii = i;
+                   }else if(nums[i] > nums[ii]){
+                       jj = i;
+                       //printf("---%d\n", jj);
+                   }
+               }else{
+                   if(tmpii == -1){
+                       if(nums[i] < nums[ii]){
+                            tmpii = i;
+                        }else if(nums[i] > nums[ii] && nums[i] <= nums[jj]){
+                            jj = i;
+                        }
+                   }else{
+                        if(nums[i] < nums[tmpii]){
+                            tmpii = i;
+                        }else if(nums[i] >= nums[tmpii] && nums[i] <= nums[jj]){
+                            jj = i;
+                            ii = tmpii;
+                            tmpii = -1;
+                        }
+                   }
+               }
+           }
+       }
+       return false;
+    }
+};

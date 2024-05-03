@@ -1,0 +1,32 @@
+class Solution {
+    public int lengthOfLIS(int[] nums) {
+        int n = nums.length;
+        int[] path = new int[n];
+        path[0] = nums[0];
+        int len = 1;
+        int k = 0;
+        for(int i = 1; i < n; i ++){
+            if(nums[i] > path[len - 1]){
+                path[len] = nums[i];
+                len ++;
+            }else{
+                k = ceilIndex(path, 0, len - 1, nums[i]);
+            }
+            path[k] = nums[i];
+        }
+        return len;
+    }
+
+    public int ceilIndex(int[] path, int st, int ed, int x){
+        while(ed > st){
+            int m = st + (ed - st) / 2;
+            if(path[m] >= x){
+                ed = m;
+            }else{
+                st = m + 1;
+            }
+            
+        }
+        return ed;
+    }
+}

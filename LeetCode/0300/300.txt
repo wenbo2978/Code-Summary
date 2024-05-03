@@ -1,0 +1,16 @@
+class Solution {
+public:
+    int lengthOfLIS(vector<int>& nums) {
+        vector<int> rd;
+        rd.push_back(nums[0]);
+        for(int i = 1; i < nums.size(); i ++){
+            if(nums[i] > rd[rd.size() - 1]){
+                rd.push_back(nums[i]);
+            }else{
+                auto it=lower_bound(rd.begin(), rd.end(), nums[i]);
+                *it=nums[i];
+            }
+        }
+        return rd.size();
+    }
+};

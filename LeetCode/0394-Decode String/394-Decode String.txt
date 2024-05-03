@@ -1,0 +1,57 @@
+class Solution {
+public:
+    string decodeString(string s) {
+        stack<char> st, sttmp;
+        string tmp = "", number = "", ans = "";
+        int flag = 0;
+        for(int i = 0; i < s.size(); i ++){
+            //printf("%c-----\n", s[i]);
+            if(s[i] == ']'){
+                while(!st.empty()){
+                    if(flag == 0){
+                        if(st.top() == '['){
+                            flag = 1;
+                            st.pop();
+                        }else{
+                            tmp.push_back(st.top());
+                            st.pop();
+                        }
+                    }else{
+                        if(st.top() >= '0' && st.top() <= '9'){
+                            //cout<<st.top()<<endl;
+                            number.push_back(st.top());
+                            st.pop();
+                        }else{
+                            flag = 0;
+                            break;
+                        }
+                    }
+                }
+                flag = 0;
+                int n = 0;
+                for(int k = number.size() - 1; k >=0; k --){
+                    n += (number[k] - '0')* pow(10, k);
+                }
+                for(int k = 0; k < n; k ++){
+                    for(int j = tmp.size() - 1; j >= 0; j --){
+                        st.push(tmp[j]);
+                    }
+                }
+                number = "";
+                tmp = "";
+
+            }else{
+                st.push(s[i]);
+            }
+        }
+        while(!st.empty()){
+            sttmp.push(st.top());
+            st.pop();
+        }
+        while(!sttmp.empty()){
+            ans.push_back(sttmp.top());
+            sttmp.pop();
+        }
+        return ans;
+    }
+};

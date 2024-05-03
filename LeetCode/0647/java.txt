@@ -1,0 +1,36 @@
+class Solution {
+    public int countSubstrings(String s) {
+        int res = 1;
+        int left, right;
+        for(int i = 1; i < s.length(); i ++){
+            res ++;
+            left = i - 1;
+            right = i + 1;
+            while(isPalindromic(left, right, s)){
+                left --;
+                right ++;
+                res ++;
+            }
+            if(s.charAt(i - 1) == s.charAt(i)){
+                res ++;
+                left = i - 2;
+                right = i + 1;
+                while(isPalindromic(left, right, s)){
+                    res ++;
+                    left --;
+                    right ++;
+                }
+            }
+        }
+        return res;
+    }
+
+    public boolean isPalindromic(int left, int right, String s){
+        if(left < 0 || right >= s.length())
+            return false;
+        if(s.charAt(left) == s.charAt(right)){
+            return true;
+        }
+        return false;
+    }
+}

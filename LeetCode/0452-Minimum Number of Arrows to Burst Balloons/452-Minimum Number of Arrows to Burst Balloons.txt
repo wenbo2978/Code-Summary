@@ -1,0 +1,35 @@
+class Solution {
+public:
+    static bool cmp(const vector<int>& A, const vector<int>& B){
+        return A[1] < B[1];
+    }
+    int findMinArrowShots(vector<vector<int>>& points) {
+        /*sort(points.begin(), points.end(), [](const vector<int>& A, const vector<int>& B)->bool{
+            return A[1] < B[1];
+        });*/
+        sort(points.begin(), points.end(), cmp);
+        int f = 0;
+        int ans = 0;
+        int iend, istart;
+        /*for(int i = 0; i < points.size(); i ++)
+            printf("%d %d\n", points[i][0], points[i][1]);*/
+        for(int i = 0; i < points.size(); i ++){
+            if(f == 0){
+                ans ++;
+                iend = points[i][1];
+                istart = points[i][0];
+                f = 1;
+            }else{
+                if(points[i][0] > iend){
+                    f = 0;
+                    i --;
+                }else{
+                    iend = min(iend, points[i][1]);
+                    istart = max(istart,points[i][0]);
+                    continue;
+                }
+            }
+        }
+        return ans;
+    }
+};

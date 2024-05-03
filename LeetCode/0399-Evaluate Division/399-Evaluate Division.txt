@@ -1,0 +1,49 @@
+class Solution {
+public:
+
+    double findRes(string &st, string &ed, map<string,vector<pair<string,double>>> &mp){
+        queue<pair<string, double>> q;
+        set<string> sset;
+        sset.insert(st);
+        q.push({st, (double)1});
+        while(!q.empty()){
+            string tmp = q.front().first;
+            double val = q.front().second;
+            if(tmp == ed)
+                return val;
+            q.pop();
+            for(int i = 0; i < mp[tmp].size(); i ++){
+                string s1 = mp[tmp][i].first;
+                double cost = mp[tmp][i].second;
+                if(sset.find(s1) == sset.end()){
+                    sset.insert(s1);
+                    q.push({s1, val * cost});
+                }
+            }
+        }
+        return (double)-1;
+    }
+
+    vector<double> calcEquation(vector<vector<string>>& equations, vector<double>& values, vector<vector<string>>& queries) {
+        map<string,vector<pair<string, double>>> mp;
+        for(int i = 0; i < equations.size(); i ++){
+            string a = equations[i][0];
+            string b = equations[i][1];
+            mp[a].push_back({b, values[i]});
+            mp[b].push_back({a, (double)1/values[i]});
+        }
+        vector<double> ans;
+
+        for(int i = 0; i < queries.size(); i ++){
+            string st = queries[i][0];
+            string ed = queries[i][1];
+            if(mp.find(st) != mp.end() && mp.find(ed) != mp.end()){
+                ans.push_back(findRes(st,ed,mp));
+            }else{
+                ans.push_back((double)-1);
+            }
+        }
+
+        return ans;
+    }
+};
