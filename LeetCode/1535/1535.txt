@@ -1,0 +1,53 @@
+class Solution {
+public:
+    int getWinner(vector<int>& arr, int k) {
+        if(k > arr.size()){
+            int max = INT_MIN;
+            for(int i = 0; i < arr.size(); i ++){
+                if(max < arr[i]){
+                    max = arr[i];
+                }
+            }
+            return max;
+        }
+        queue<int> q;
+        for(int i = 0; i < arr.size(); i ++){
+            q.push(arr[i]);
+        }
+        int winner = -1, prewinner = -1;
+        int first;
+        int second;
+        int n = 0;
+        while(n < k){
+            if(prewinner == -1){
+                //printf("---\n");
+                first = q.front();
+                q.pop();
+                second = q.front();
+                q.pop();
+                winner = max(first, second);
+                q.push(min(first, second));
+                //printf("%d\n", winner);
+            }else{
+                first = q.front();
+                q.pop();
+                q.push(min(first, prewinner));
+                winner = max(prewinner, first);
+
+            }
+            if(prewinner == -1){
+                n++;
+                prewinner = winner;
+            }else{
+                if(prewinner == winner){
+                    n++;
+                }else{
+                    prewinner = winner;
+                    n = 1;
+                }
+            }
+            printf("%d is winner\n", winner);
+        }
+        return winner;
+    }
+};

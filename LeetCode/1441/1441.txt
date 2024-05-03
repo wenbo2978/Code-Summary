@@ -1,0 +1,19 @@
+class Solution {
+public:
+    vector<string> buildArray(vector<int>& target, int n) {
+        vector<string> res;
+        for(int i = 0, j = 1; i < target.size(); i ++, j ++){
+            printf("%d\n", target[i]);
+            if(target[i] == j){
+                printf("Push\n");
+                res.push_back("Push");
+            }else{
+                printf("Push Pop\n");
+                res.push_back("Push");
+                res.push_back("Pop");
+                i --;
+            }
+        }
+        return res;
+    }
+};

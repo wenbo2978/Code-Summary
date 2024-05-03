@@ -1,0 +1,26 @@
+class Solution {
+public:
+    int maxOperations(vector<int>& nums, int k) {
+        map<int, queue<int>> pos;
+        int n = 0;
+        for(int i = 0; i < nums.size(); i ++){
+            int h = k - nums[i];
+            if(pos.find(h) == pos.end() || pos[h].empty()){
+                if(pos.find(nums[i]) == pos.end()){
+                    queue<int> q;
+                    q.push(i);
+                    pos.insert(pair<int, queue<int>>(nums[i],q));
+                }else{
+                    pos[nums[i]].push(i);
+                }
+
+            }else{
+                nums[i] = -1;
+                nums[pos[h].front()] = -1;
+                pos[h].pop();
+                n ++;
+            }
+        }
+        return n;
+    }
+};

@@ -1,0 +1,35 @@
+class Solution {
+public:
+    int minReorder(int n, vector<vector<int>>& connections) {
+        vector<vector<pair<int,int>>> group(n);
+        vector<int> visited(n, 0);
+        for(auto& d : connections){
+            group[d[0]].push_back(pair<int, int>(d[1], 1));
+            group[d[1]].push_back(pair<int, int>(d[0], 0));
+        }
+        int cityNum;
+        int ans = 0;
+        queue<int> q;
+        q.push(0);
+        visited[0] = 1;
+        while(!q.empty()){
+            int size = q.size();
+            while(size --){
+                cityNum = q.front();
+                q.pop();
+                for(auto& nx : group[cityNum]){
+                    if(visited[nx.first] == 1){
+                        continue;
+                    }
+                    visited[nx.first] = 1;
+                    q.push(nx.first);
+                    if(nx.second == 1){
+                        ans ++;
+                    }
+                }
+            }
+
+        }
+        return ans;
+    }
+};

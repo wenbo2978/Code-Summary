@@ -1,0 +1,23 @@
+class Solution {
+public:
+    int minimumLength(string s) {
+        int n = s.size();
+        if(n == 1)
+            return 1;
+        char m;
+        int st = 0, ed = n - 1;
+        while(st < ed){
+            if(s[st] != s[ed])
+                break;
+            m = s[st];
+            while(s[st] == m && st < ed)
+                st ++;
+            if(st == ed)
+                return 0;
+                
+            while(s[ed] == m && st < ed)
+                ed --;
+        }
+        return ed - st + 1;
+    }
+};

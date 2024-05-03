@@ -1,0 +1,45 @@
+class Solution {
+        public static int minFlips(int a, int b, int c) {
+        int flip = 0;
+        while((a|b)!=c){
+            if (((c & 1) == 1)&&((a & 1)==0 && (b & 1)==0)){
+                a=a>>1;
+                b=b>>1;
+                c=c>>1;
+                flip++;
+            }else if (((c & 1) == 1)&&((a & 1)==1 && (b & 1)==1)){
+                a=a>>1;
+                b=b>>1;
+                c=c>>1;
+            }else if (((c & 1) == 1) && (a & 1) == 0){
+                a=a>>1;
+                b=b>>1;
+                c=c>>1;
+            } else if ((c & 1) == 1 && (b & 1) == 0) {
+                a=a>>1;
+                b=b>>1;
+                c=c>>1;
+            } else if (((c & 1) == 0)&&((a & 1)==0 && (b & 1)==0)) {
+                a=a>>1;
+                b=b>>1;
+                c=c>>1;
+            } else if (((c & 1) == 0)&&((a & 1)==1 && (b & 1)==0)) {
+                a=a>>1;
+                b=b>>1;
+                c=c>>1;
+                flip++;
+            } else if (((c & 1)==0)&&((b & 1) == 1) && (a & 1)==0 ) {
+                a=a>>1;
+                b=b>>1;
+                c=c>>1;
+                flip++;
+            } else if (((c & 1)==0)&&((a & 1)==1 && (b & 1) == 1)) {
+                a=a>>1;
+                b=b>>1;
+                c=c>>1;
+                flip+=2;
+            }
+        }
+        return flip;
+    }
+}

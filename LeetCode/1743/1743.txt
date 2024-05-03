@@ -1,0 +1,41 @@
+class Solution {
+public:
+    vector<int> restoreArray(vector<vector<int>>& adjacentPairs) {
+        int len = adjacentPairs.size() + 1;
+        vector<int> res(len, INT_MIN);
+        map<int,vector<int>> mp;
+        for(int i = 0; i < len-1; i ++){
+            mp[adjacentPairs[i][0]].push_back(adjacentPairs[i][1]);
+            mp[adjacentPairs[i][1]].push_back(adjacentPairs[i][0]);
+        }
+        int pos = 0;
+        int next;
+        for(auto& x : mp){
+            if(x.second.size() == 1){
+                res[pos ++] = x.first;
+                res[pos ++] = x.second[0];
+                next = x.second[0];
+                break;
+            }
+        }
+        while(pos < len){
+            if(mp[next].size() == 1){
+                if(res[pos - 2] != mp[next][0]){
+                    res[pos ++] = mp[next][0];
+                    next = mp[next][0];
+                }else{
+                    return res;
+                }
+            }else{
+                for(int j = 0; j < 2; j ++){
+                    if(res[pos - 2] != mp[next][j]){
+                        res[pos ++] = mp[next][j];
+                        next = mp[next][j];
+                        break;
+                    }
+                }
+            }
+        }
+        return res;
+    }
+};

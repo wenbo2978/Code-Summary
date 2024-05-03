@@ -1,0 +1,26 @@
+class Solution {
+public:
+    vector<vector<string>> suggestedProducts(vector<string>& products, string searchWord) {
+        string prefix = "";
+        int count = 0;
+        vector<vector<string>> ans;
+        sort(products.begin(), products.end());
+        for(int i = 0; i < searchWord.size(); i ++){
+            prefix.push_back(searchWord[i]);
+            vector<string> tmp;
+            count = 0;
+            for(int j = 0; j <products.size(); j ++){
+                if(prefix == products[j].substr(0, i + 1)){
+                    if(count < 3){
+                        tmp.push_back(products[j]);
+                        count ++;
+                    }else{
+                        break;
+                    }
+                }
+            }
+            ans.push_back(tmp);
+        }
+        return ans;
+    }
+};

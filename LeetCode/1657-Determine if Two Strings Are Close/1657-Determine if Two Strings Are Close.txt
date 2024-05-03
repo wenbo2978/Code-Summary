@@ -1,0 +1,47 @@
+class Solution {
+public:
+    bool closeStrings(string word1, string word2) {
+        if(word1.size() != word2.size())
+            return false;
+        map<char, int> mpnum1, mpnum2;
+        for(int i = 0; i < word1.size(); i ++){
+            if(mpnum1.find(word1[i]) == mpnum1.end()){
+                mpnum1.insert(pair<char, int>(word1[i], 1));
+            }else{
+                mpnum1[word1[i]]++;
+            }
+
+            if(mpnum2.find(word2[i]) == mpnum2.end()){
+                mpnum2.insert(pair<char, int>(word2[i], 1));
+            }else{
+                mpnum2[word2[i]]++;
+            }
+        }
+        if(mpnum1.size() != mpnum2.size())
+            return false;
+        for(auto &m1 : mpnum1){
+            if(mpnum2.find(m1.first) == mpnum2.end())
+                return false;
+        }
+
+        map<int, int> mp;
+        for(auto &m1 : mpnum1){
+            if(mp.find(m1.second) == mp.end()){
+                mp.insert(pair<int, int>(m1.second, 1));
+            }else{
+                mp[m1.second] ++;
+            }
+        }
+
+        for(auto &m2 : mpnum2){
+            if(mp.find(m2.second) == mp.end()){
+                return false;
+            }else{
+                mp[m2.second] --;
+                if(mp[m2.second] < 0)
+                    return false;
+            }
+        }
+        return true;
+    }
+};
