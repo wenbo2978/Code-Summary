@@ -1,0 +1,61 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    vector<int> rightSideView(TreeNode* root) {
+        vector<int> ans;
+        if(root == nullptr)
+            return ans;
+        queue<TreeNode*> q;
+        stack<TreeNode*> st;
+        q.push(root);
+        int level = 0;
+        int miss = 0;
+        int prenumber = 1;
+        int n = 0;
+        while(!q.empty()){
+            int recordmiss = 0;
+            if(level == 0){
+                n = 1;
+            }else{
+                n = pow(2, level) - (pow(2, level- 1) - prenumber) * 2 - miss;
+            }
+            //printf("n:%d\n", n);
+            for(int i = 0; i < n; i ++){
+                TreeNode* tmp = q.front();
+                q.pop();
+                if(tmp->right!=nullptr)
+                    q.push(tmp->right);
+                else
+                    recordmiss ++;
+                if(tmp->left!=nullptr)
+                    q.push(tmp->left);
+                else
+                    recordmiss ++;
+                //printf("%d ", tmp->val);
+                if(i == 0){
+                    ans.push_back(tmp->val);
+                }
+                //st.push(tmp);
+            }
+            //printf("\n");
+            level ++;
+            miss = recordmiss;
+            prenumber = n;
+            /*ans.push_back(st.top()->val);
+            while(!st.empty()){
+                st.pop();
+            }*/
+        }
+        return ans;
+    }
+};

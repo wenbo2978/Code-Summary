@@ -1,0 +1,23 @@
+class Solution {
+public:
+    bool isPowerOfTwo(int n) {
+        if(n == 1){
+            return true;
+        }
+        if(n < 0)
+            return false;
+        cout << ceil(log2(n)) << ", " << floor(log2(n)) << endl;
+        printf("%d %d\n", (int)ceil(log2(n)), (int)floor(log2(n)));
+        cout << (ceil(log2(n))==floor(log2(n))) << endl;
+        unsigned int k = 1;
+        while(k <= n){
+            if(k == n){
+                return true;
+        
+            }
+                
+            k *= 2;
+        }
+        return false;
+    }
+};

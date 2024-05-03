@@ -1,0 +1,24 @@
+class Solution {
+    public boolean wordBreak(String s, List<String> wordDict) {
+        Set<String> dict = new HashSet<>();
+        int n = s.length();
+        for(String word : wordDict){
+            dict.add(word);
+        }
+        int[] arry = new int[n + 1];
+        arry[0] = 1;
+        for(int len = 1; len <= n; len ++){
+            if(dict.contains(s.substring(0, len))){
+                arry[len] = 1;
+            }else{
+                for(int left = 0; left < len; left ++){
+                    if(arry[left] == 1 && dict.contains(s.substring(left, len))){
+                        arry[len] = 1;
+                    }
+                }
+            }
+        }
+
+        return arry[n] == 1;
+    }
+}

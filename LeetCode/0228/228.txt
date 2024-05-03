@@ -1,0 +1,40 @@
+class Solution {
+public:
+    vector<string> summaryRanges(vector<int>& nums) {
+        vector<string> res;
+        if(nums.size() == 0)
+            return res;
+        int flag = -1;
+        int pre, first, last;
+        for(int i = 0; i < nums.size(); i ++){
+            if(flag == -1){
+                pre = nums[i];
+                flag = 0;
+                first = nums[i];
+            }else{
+                if(nums[i] == pre + 1){
+                    pre = nums[i];
+                }else{
+                    last = pre;
+                    //
+                    if(last == first){
+                        cout << last << endl;
+                        res.push_back(to_string(last));
+                    }else{
+                        res.push_back(to_string(first) + "->" + to_string(last));
+                    }
+                    //
+                    pre = nums[i];
+                    first = nums[i];
+                }
+            }
+        }
+        last = pre;
+        if(last == first)
+            res.push_back(to_string(last));
+        else{
+            res.push_back(to_string(first) + "->" + to_string(last));
+        }
+        return res;
+    }
+};

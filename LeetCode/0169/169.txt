@@ -1,0 +1,21 @@
+class Solution {
+public:
+    int majorityElement(vector<int>& nums) {
+        int count = 0;
+        int modeNum = 0;
+        for(auto n: nums){
+            printf("%d\n", n);
+            if(count == 0){
+                modeNum = n;
+                //count ++;
+            }
+            if(modeNum == n){
+                count ++;
+            }else{
+                count --;
+            }
+            
+        }
+        return modeNum;
+    }
+};

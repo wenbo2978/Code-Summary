@@ -1,0 +1,29 @@
+class Solution {
+public:
+    bool isHappy(int n) {
+        int sum;
+        int dig;
+        map<int, int> rd;
+        rd[n] = 10;
+        while(true){
+            sum = 0;
+            while(n > 0){
+                dig = n % 10;
+                sum += dig * dig;
+                n /= 10;
+            }
+            //cout << sum << endl;
+            if(sum == 1){
+                return true;
+            }else{
+                if(rd[sum] == 10){
+                    return false;
+                }else{
+                    rd[sum] = 10;
+                }
+                n = sum;
+            }
+        }
+        return false;
+    }
+};

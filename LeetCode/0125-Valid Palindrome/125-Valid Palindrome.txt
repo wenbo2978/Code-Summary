@@ -1,0 +1,53 @@
+class Solution {
+public:
+    bool isPalindrome(string s) {
+        int st = 0, ed = s.size() - 1;
+        bool flag = true;
+        while(st <= ed){
+            while(st <= ed){
+                if((s[st] >= 'A' && s[st] <= 'Z') || (s[st] >= 'a' && s[st] <= 'z') 
+                || (s[st] >= '0' && s[st] <= '9')){
+                    break;
+                }else{
+                    st++;
+                }
+            }
+
+            while(st <= ed){
+                if((s[ed] >= 'A' && s[ed] <= 'Z') || (s[ed] >= 'a' && s[ed] <= 'z') 
+                || (s[ed] >= '0' && s[ed] <= '9')){
+                    break;
+                }else{
+                    ed--;
+                }
+            }
+
+            if(((s[st] >= 'A' && s[st] <= 'Z') || (s[st] >= 'a' && s[st] <= 'z')
+            || (s[st] >= '0' && s[st] <= '9')) 
+            && ((s[ed] >= 'A' && s[ed] <= 'Z') || (s[ed] >= 'a' && s[ed] <= 'z') 
+            || (s[ed] >= '0' && s[ed] <= '9'))){
+                //printf("%c %c\n", s[st], s[ed]);
+                if((s[st] >= '0' && s[st] <= '9') || (s[ed] >= '0' && s[ed] <= '9')){
+                    if(s[st] == s[ed]){
+                        st++;
+                        ed--;
+                        continue;
+                    }else{
+                        flag = false;
+                        break;
+                    }
+                }else if(s[st] == s[ed] || abs(s[st] - s[ed]) == abs('a' - 'A')){
+                    st++;
+                    ed--;
+                    continue;
+                }else{
+                    flag = false;
+                    break;
+                }
+            }else{
+                break;
+            }
+        }
+        return flag;
+    }
+};
