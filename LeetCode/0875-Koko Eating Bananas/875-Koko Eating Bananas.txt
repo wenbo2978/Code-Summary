@@ -1,0 +1,23 @@
+class Solution {
+public:
+    int minEatingSpeed(vector<int>& piles, int h) {
+        int st = 1, ed = 0;
+        for(int i = 0; i < piles.size(); i ++){
+            ed = max(ed, piles[i]);
+        }
+        int time = 0;
+        while(st < ed){
+            int md = st + (ed - st) / 2;
+            time = 0;
+            for(int i = 0; i < piles.size(); i ++){
+                time += piles[i] / md + (piles[i] % md == 0 ? 0 : 1);
+            }
+            if(time > h){
+                st = md + 1;
+            }else{
+                ed = md;
+            }
+        }
+        return st;
+    }
+};

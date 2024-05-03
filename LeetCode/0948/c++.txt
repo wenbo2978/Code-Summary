@@ -1,0 +1,36 @@
+class Solution {
+public:
+    int bagOfTokensScore(vector<int>& tokens, int power) {
+        //vector<int> visited(0, tokens.size());
+        int score = 0, tmpScore = 0;
+        int n = tokens.size();
+        if(n == 0)
+            return 0;
+        if(n == 1)
+            return power >= tokens[0] ? 1 : 0;
+        int st = 0, ed = n - 1;
+        int index = 0;
+        sort(tokens.begin(), tokens.end());
+        while(index < n){
+            //printf("%d %d %d\n", power, score, tmpScore);
+            if(power >= tokens[st]){
+                power -= tokens[st];
+                tmpScore ++;
+                st ++;
+                index ++;
+            }else{
+                if(tmpScore > 0){
+                    tmpScore --;
+                    power += tokens[ed];
+                    ed --;
+                    index ++;
+                }else{
+                    break;
+                }
+            }
+
+            score = max(score, tmpScore);
+        }
+        return score;
+    }
+};

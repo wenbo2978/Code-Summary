@@ -1,0 +1,80 @@
+class Solution {
+public:
+    int orangesRotting(vector<vector<int>>& grid) {
+        queue<vector<int>> q;
+        vector<int> point;
+        int freshNum = 0;
+        int ans = 0;
+        for(int i = 0; i < grid.size(); i ++){
+            for(int j = 0; j < grid[0].size(); j ++){
+                if(grid[i][j] == 2){
+                    vector<int> tmp(3);
+                    tmp[0] = i;
+                    tmp[1] = j;
+                    tmp[2] = 0;
+                    q.push(tmp);
+                }
+                if(grid[i][j] == 1){
+                    freshNum++;
+                }
+            }
+        }
+        
+        while(!q.empty()){
+            point = q.front();
+            q.pop();
+            if(point[0] - 1 >= 0){
+                if(grid[point[0] - 1][point[1]] == 1){
+                    grid[point[0] - 1][point[1]] = 2;
+                    vector<int> tmp(3);
+                    tmp[0] = point[0] - 1;
+                    tmp[1] = point[1];
+                    tmp[2] = point[2] + 1;
+                    ans = tmp[2];
+                    freshNum --;
+                    q.push(tmp);
+                }
+            }
+            if(point[0] + 1 < grid.size()){
+                if(grid[point[0] + 1][point[1]] == 1){
+                    grid[point[0] + 1][point[1]] = 2;
+                    vector<int> tmp(3);
+                    tmp[0] = point[0] + 1;
+                    tmp[1] = point[1];
+                    tmp[2] = point[2] + 1;
+                    ans = tmp[2];
+                    freshNum --;
+                    q.push(tmp);
+                }
+            }
+            if(point[1] - 1 >= 0){
+                if(grid[point[0]][point[1] - 1] == 1){
+                    grid[point[0]][point[1] - 1] = 2;
+                    vector<int> tmp(3);
+                    tmp[0] = point[0];
+                    tmp[1] = point[1] - 1;
+                    tmp[2] = point[2] + 1;
+                    ans = tmp[2];
+                    freshNum --;
+                    q.push(tmp);
+                }
+            }
+            if(point[1] + 1 < grid[0].size()){
+                if(grid[point[0]][point[1] + 1] == 1){
+                    grid[point[0]][point[1] + 1] = 2;
+                    vector<int> tmp(3);
+                    tmp[0] = point[0];
+                    tmp[1] = point[1] + 1;
+                    tmp[2] = point[2] + 1;
+                    ans = tmp[2];
+                    freshNum --;
+                    q.push(tmp);
+                }
+            }
+        }
+        if(freshNum == 0)
+            return ans;
+        else
+            return -1;
+    }
+};

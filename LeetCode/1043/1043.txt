@@ -1,0 +1,27 @@
+class Solution {
+    public int maxSumAfterPartitioning(int[] arr, int k) {
+        int res = 0;
+        int[] dp = new int[arr.length];
+        dp[0] = arr[0];
+        for(int i = 1; i < arr.length; i ++){
+            if(i - k < 0){
+                int tempMax = 0;
+                for(int m = 0; m <= i; m ++){
+                    tempMax = Math.max(tempMax, arr[m]);
+                }
+                dp[i] = tempMax * (i + 1);
+            }else{
+                for(int j = 1; j <= k; j ++){
+                int tempMax = 0;
+                for(int m = i - j + 1; m <= i; m ++){
+                    tempMax = Math.max(tempMax, arr[m]);
+                }
+                dp[i] = Math.max(dp[i], dp[i - j] + tempMax * j);
+            }
+            }
+            
+        }
+        
+        return dp[dp.length - 1];
+    }
+}

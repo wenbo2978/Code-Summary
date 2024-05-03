@@ -1,0 +1,56 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    int maxLevelSum(TreeNode* root) {
+        queue<TreeNode*> q;
+        q.push(root);
+        int level = 0;
+        int sum = 0, maxsum = root->val;
+        int miss = 0, recordmiss = 0;
+        int n = 0;
+        int prenumber = 1;
+        int ans = 1;
+        while(!q.empty()){
+            if(level == 0){
+                n = 1;
+            }else{
+                n = pow(2,level) - (pow(2,level - 1) - prenumber) * 2 - miss;
+            }
+            recordmiss = 0;
+            sum = 0;
+            for(int i = 0; i < n; i ++){
+                TreeNode* tmp = q.front();
+                q.pop();
+                if(tmp->left!=nullptr){
+                    q.push(tmp->left);
+                }else{
+                    recordmiss ++;
+                }
+                if(tmp->right!=nullptr){
+                    q.push(tmp->right);
+                }else{
+                    recordmiss ++;
+                }
+                sum += tmp->val;
+            }
+            if(maxsum < sum){
+                maxsum = sum;
+                ans = level +1;
+            }
+            level ++;
+            miss = recordmiss;
+            prenumber = n;
+        }
+        return ans;
+    }
+};

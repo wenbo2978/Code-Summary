@@ -1,0 +1,25 @@
+class Solution {
+public:
+    
+    string customSortString(string order, string s) {
+        int nums[26];
+        string res = "";
+        for(int i = 0; i < s.size(); i ++){
+            nums[s[i] - 'a'] ++;
+        }
+        for(int i = 0; i < order.size(); i ++){
+            
+            while(nums[order[i] - 'a'] > 0){
+                res.push_back(order[i]);
+                nums[order[i] - 'a'] --;
+            }
+        }
+        for(int i = 0; i < 26; i ++){
+            while(nums[i] > 0){
+                nums[i]--;
+                res.push_back('a' + i);
+            }
+        }
+        return res;
+    }
+};

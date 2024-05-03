@@ -1,0 +1,28 @@
+class Solution {
+public:
+    bool canVisitAllRooms(vector<vector<int>>& rooms) {
+        vector<int> rec(rooms.size(), -1);
+        queue<int> q;
+        int n;
+        rec[0] = 1;
+        for(int i = 0; i < rooms[0].size(); i ++){
+            q.push(rooms[0][i]);
+        }
+        while(!q.empty()){
+            n = q.front();
+            q.pop();
+            if(rec[n] == -1){
+                rec[n] = 1;
+                for(int j = 0; j < rooms[n].size(); j ++){
+                    q.push(rooms[n][j]);
+                }
+            }
+        }
+        for(int i = 0; i < rec.size(); i ++){
+            //printf("%d\n", rec[i]);
+            if(rec[i] == -1)
+                return false;
+        }
+        return true;
+    }
+};

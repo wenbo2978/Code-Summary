@@ -1,0 +1,36 @@
+class Solution {
+public:
+    vector<int> asteroidCollision(vector<int>& asteroids) {
+        vector<int> ans;
+        int index = -1;
+        for(int i = 0; i < asteroids.size(); i ++){
+            if(asteroids[i] > 0){
+                index ++;
+                asteroids[index] = asteroids[i];
+            }else if(asteroids[i] < 0){
+                if(index == -1){
+                    index ++;
+                    asteroids[index] = asteroids[i];
+                }else{
+                    if(asteroids[index] < 0){
+                        index ++;
+                        asteroids[index] = asteroids[i];
+                    }else{
+                        if(asteroids[index] > asteroids[i] * -1){
+                            continue;
+                        }else if(asteroids[index] == asteroids[i] * -1){
+                            index--;
+                        }else{
+                            index--;
+                            i--;
+                        }
+                    }
+                }
+            }
+        }
+        for(int i = 0; i <= index; i ++){
+            ans.push_back(asteroids[i]);
+        }
+        return ans;
+    }
+};

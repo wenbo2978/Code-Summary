@@ -1,0 +1,35 @@
+class Solution {
+public:
+    string predictPartyVictory(string senate) {
+        queue<char> q;
+        int countR = 0, countD = 0;
+        for(int i = 0; i < senate.size(); i ++){
+            q.push(senate[i]);
+        }
+        while(1){
+            char k = q.front();
+            q.pop();
+            if(k == 'R'){
+                if(countR >= countD){
+                    countR++;
+                    q.push(k);
+                    if(countR == q.size())
+                        return "Radiant";
+                }else{
+                    countD --;
+                }
+            }else{
+                if(countD >= countR){
+                    countD++;
+                    q.push(k);
+                    if(countD == q.size())
+                        return "Dire";
+                }else{
+                    countR --;
+                }
+            }
+
+        }
+        //return "Dire";
+    }
+};

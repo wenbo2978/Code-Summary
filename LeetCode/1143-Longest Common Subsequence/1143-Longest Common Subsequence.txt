@@ -1,0 +1,39 @@
+class Solution {
+public:
+    int longestCommonSubsequence(string text1, string text2) {
+        int m = text1.size();
+        int n = text2.size();
+        vector<vector<int>> fd;
+        for(int i = 0; i < m; i ++){
+            vector<int> tp(n);
+            fd.push_back(tp);
+        }
+
+        for(int i = 0; i < m; i ++){
+            for(int j = 0; j < n; j ++){
+                if(text1[i] == text2[j]){
+                    if(i == 0 || j == 0){
+                        fd[i][j] = 1;
+                    }else{
+                        fd[i][j] = max(fd[i - 1][j - 1] + 1, max(fd[i][j-1], fd[i-1][j]));
+                    }
+                }else{
+                    if(i == 0 || j == 0){
+                        if(i == 0 && j == 0){
+                            fd[i][j] = 0;
+                        }else if(i == 0){
+                            fd[i][j] = fd[i][j - 1];
+
+                        }else{
+                            fd[i][j] = fd[i - 1][j];
+                        }
+                    }else{
+                        fd[i][j] = max(fd[i][j-1], fd[i-1][j]);
+                    }
+                }
+            }
+        }
+
+        return fd[m - 1][n - 1];
+    }
+};

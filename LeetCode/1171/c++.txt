@@ -1,0 +1,72 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* removeZeroSumSublists(ListNode* head) {
+        vector<int> list;
+        vector<int> sum;
+        int t = 0;
+        
+        while(head!= nullptr){
+            list.push_back(head-> val);
+            t += head-> val;
+            head = head-> next;
+            sum.push_back(t);
+        }
+        int st = list.size() - 1;
+        while(st >= 0){
+            if(sum[st] == 0){
+                for(int j = 0; j <= st; j ++){
+                    list[j] = 0;
+                }
+                break;
+            }
+                
+            st --;
+        }
+        map<int, int> mp;
+        for(int i = st + 1; i < sum.size(); i ++){
+            
+            if(mp.count(sum[i]) == 0){
+                mp[sum[i]] = i;
+            }else{
+                //printf("%d------\n", i);
+                //clear (mp[sum[i]], i]
+                //mp.erase(sum[i]);
+                list[i] = 0;
+                for(int j = mp[sum[i]] + 1; j < i; j ++){
+                    
+                    if(list[j] != 0){
+                        //printf("%d\n", j);
+                        list[j] = 0;
+                        mp.erase(sum[j]);
+                    }
+                    
+                }
+            }
+            
+            
+        }
+        
+        
+
+        ListNode* ans = new ListNode();
+        ListNode* tmp = ans;
+        for(int i = 0; i < list.size(); i ++){
+            if(list[i] != 0){
+                ListNode* newNode = new ListNode(list[i]);
+                tmp -> next = newNode;
+                tmp = tmp-> next;
+            }
+        }
+        return ans-> next;
+    }
+};
