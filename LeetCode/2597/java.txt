@@ -1,0 +1,35 @@
+class Solution {
+    public int beautifulSubsets(int[] nums, int k) {
+        Arrays.sort(nums);
+        System.out.println(nums[0]);
+        int[] cnt = new int[1001];
+        Arrays.fill(cnt, 0);
+        int len = nums.length;
+        int[] ans = new int[1];
+        ans[0] = 0;
+        trackBack(0, len - 1, nums, cnt, ans, k);
+        return ans[0];
+    }
+
+    private void trackBack(int t, int len, int[] nums, int[] cnt, int[] ans, int k){
+        if(t > len)
+            return;
+        if(nums[t] < k){
+            cnt[nums[t]] ++;
+            ans[0] ++;
+            trackBack(t + 1, len, nums, cnt, ans, k);
+            cnt[nums[t]] --;
+            trackBack(t + 1, len, nums, cnt, ans, k);
+        }else{
+            if(cnt[nums[t] - k] == 0){
+                cnt[nums[t]] ++;
+                ans[0] ++;
+                trackBack(t + 1, len, nums, cnt, ans, k);
+                cnt[nums[t]] --;
+            }
+            
+            //cnt[nums[t]] = 0;
+            trackBack(t + 1, len, nums, cnt, ans, k);
+        }
+    }
+}

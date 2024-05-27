@@ -1,0 +1,26 @@
+class Solution {
+    public List<List<Integer>> subsets(int[] nums) {
+        int len = nums.length;
+        int[] path = new int[len];
+        List<List<Integer>> ans = new ArrayList<>();
+        findAll(ans, 0, len - 1, nums, path);
+        return ans;
+    }
+
+    public void findAll(List<List<Integer>> ans, int t, int len, int[] nums, int[] path){
+        if(t > len){
+            List<Integer> list = new ArrayList<>();
+            for(int i = 0; i < nums.length; i ++){
+                if(path[i] == 1)
+                    list.add(nums[i]);
+            }
+            ans.add(list);
+            return;
+        }else{
+            path[t] = 0;
+            findAll(ans, t + 1, len, nums, path);
+            path[t] = 1;
+            findAll(ans, t + 1, len, nums, path);
+        }
+    }
+}

@@ -1,0 +1,18 @@
+class Solution {
+    public int trailingZeroes(int n) {
+        int num1 = 0, num2 = 0;
+        for(int i = 1; i <=n; i ++){
+            int v = i;
+            while(v % 2 == 0){
+                v /= 2;
+                num1 ++;
+            }
+            while(v % 5 == 0){
+                v /= 5;
+                num2 ++;
+            }
+        }
+
+        return Math.min(num1, num2);
+    }
+}

@@ -1,0 +1,35 @@
+class Solution {
+    public boolean searchMatrix(int[][] matrix, int target) {
+        int row = matrix.length, col = matrix[0].length;
+        int top = 0, bottom = row - 1;
+        int midV = 0, midH = 0;
+        int left = 0, right = col - 1;
+        while(top < bottom){
+            midV = top + (bottom - top) / 2;
+            //System.out.println("mid:"+midV+",top:"+top+",bottom:"+bottom);
+            if(target == matrix[midV][col - 1]){
+                return true;
+            }else if(target < matrix[midV][col - 1]){
+                bottom = midV;
+            }else{
+                top = midV + 1;
+            }
+        }
+        //System.out.println("top:"+top + ",bottom:"+bottom);
+
+        while(left < right){
+            midH = left + (right - left) / 2;
+            if(target == matrix[bottom][midH]){
+                return true;
+            }else if(target < matrix[bottom][midH]){
+                right = midH;
+            }else{
+                left = midH + 1;
+            }
+        }
+        if(matrix[bottom][right] == target)
+            return true;
+
+        return false;
+    }
+}

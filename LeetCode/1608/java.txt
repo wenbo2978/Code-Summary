@@ -1,0 +1,19 @@
+class Solution {
+    public int specialArray(int[] nums) {
+        int len = nums.length;
+        int[] array = new int[1001];
+        for(int i = 0; i < len; i ++){
+            array[nums[i]] ++;
+        }
+        int sum = 0;
+        for(int i = 0; i <= 1000; i ++){
+            if(len - sum == i)
+                return i;
+            if(len - sum < i)
+                return -1;
+            sum += array[i];
+
+        }
+        return -1;
+    }
+}
