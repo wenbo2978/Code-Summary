@@ -1,0 +1,14 @@
+class Solution {
+    public boolean judgeSquareSum(int c) {
+        int n = (int)Math.sqrt(c);
+        int k = 0;
+        int rest = 0;
+        for(int i = 0; i <= n; i ++){
+            rest = c - i * i;
+            k = (int)Math.sqrt(rest);
+            if(k * k == rest)
+                return true;
+        }
+        return false;
+    }
+}

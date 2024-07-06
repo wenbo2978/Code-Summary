@@ -1,0 +1,55 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public TreeNode buildTree(int[] inorder, int[] postorder) {
+        int n = inorder.length;
+        int in_st = 0, in_ed = n - 1, post_st = 0, post_ed = n - 1;
+        TreeNode res = new TreeNode();
+        buildTreeFun(res, inorder, postorder, in_st, in_ed, post_st, post_ed);
+        return res;
+    }
+
+    void buildTreeFun(TreeNode root, int[] inorder, int[] postorder, int in_st, int in_ed, int post_st, int post_ed){
+        int val = postorder[post_ed];
+        root.val = val;
+        int lenL = 0;
+        int lenR = 0;
+        for(int i = in_st; i <= in_ed; i ++){
+            if(inorder[i] == val){
+                lenL = i - in_st;
+                break;
+            }
+        }
+        lenR = in_ed - in_st + 1 - lenL - 1;
+        //System.out.println("lenL: " + lenL);
+        //System.out.println("lenR: " + lenR);
+        if(lenL == 0){
+            root.left = null;
+        }else{
+            TreeNode left = new TreeNode();
+            root.left = left;
+            buildTreeFun(left, inorder, postorder, in_st, in_st + lenL - 1, post_st, post_st + lenL - 1);
+        }
+
+        if(lenR == 0){
+            root.right = null;
+        }else{
+            TreeNode right = new TreeNode();
+            root.right = right;
+            buildTreeFun(right, inorder, postorder, in_ed - lenR + 1, in_ed, post_st + lenL, post_ed - 1);
+        }
+    }
+}

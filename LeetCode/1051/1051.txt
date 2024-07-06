@@ -1,0 +1,26 @@
+class Solution {
+    public int heightChecker(int[] heights) {
+        int[] arrs = new int[101];
+        Arrays.fill(arrs, 0);
+        int ans = 0;
+        for(int v : heights){
+            arrs[v] ++;
+        }
+        /*for(int i = 0; i < 101; i ++){
+            System.out.println(arrs[i]);
+        }*/
+        int k = 0;
+        for(int i = 0; i < 101; i ++){
+            while(arrs[i] > 0){
+                //System.out.println(i);
+                if(i != heights[k]){
+                    //System.out.println(i + ", " + heights[k]);
+                    ans ++;
+                }
+                k++;
+                arrs[i] --;
+            }
+        }
+        return ans;
+    }
+}

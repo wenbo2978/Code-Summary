@@ -1,0 +1,33 @@
+class Solution {
+    public int maxSatisfied(int[] customers, int[] grumpy, int minutes) {
+        int res = 0;
+        for(int i = 0; i < customers.length; i ++){
+            if(grumpy[i] == 0)
+                res += customers[i];
+        }
+        int index = 0;
+        int satifyNum = 0;
+        for(; index < minutes; index ++){
+            if(grumpy[index] == 1){
+                satifyNum += customers[index];
+            }
+        }
+        /*System.out.println(res);
+        System.out.println(satifyNum);
+        System.out.println(index);*/
+        int h = -1;
+        for(int i = index; i < customers.length; i ++){
+            if(h == -1){
+                h = satifyNum;
+            }
+            if(grumpy[i] == 1){
+                h += customers[i];
+            }
+            if(grumpy[i - minutes] == 1){
+                h -= customers[i - minutes];
+            }
+            satifyNum = Math.max(satifyNum, h);
+        }
+        return res + satifyNum;
+    }
+}

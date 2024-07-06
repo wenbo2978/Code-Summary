@@ -1,0 +1,38 @@
+class Solution {
+    public int minDifference(int[] nums) {
+        if(nums.length <= 4)
+            return 0;
+        int[] minArr = new int[4];
+        int[] maxArr = new int[4];
+        Arrays.fill(minArr, Integer.MAX_VALUE);
+        Arrays.fill(maxArr, Integer.MIN_VALUE);
+        for(int num : nums){
+            for(int i = 0; i < 4; i ++){
+                if(num < minArr[i]){
+                    shift(minArr, i);
+                    minArr[i] = num;
+                    break;
+                }
+            }
+
+            for(int i = 0; i < 4; i ++){
+                if(num > maxArr[i]){
+                    shift(maxArr, i);
+                    maxArr[i] = num;
+                    break;
+                }
+            }
+        }
+        int ans = maxArr[0] - minArr[3];
+        for(int i = 0; i < 4; i ++){
+            ans = Math.min(ans, maxArr[i] - minArr[3 - i]);
+        }
+        return ans;
+    }
+
+    private void shift(int[] arr, int st){
+        for(int i = arr.length - 1; i > st; i --){
+            arr[i] = arr[i - 1];
+        }
+    }
+}

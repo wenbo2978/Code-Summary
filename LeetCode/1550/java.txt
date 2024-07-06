@@ -1,0 +1,24 @@
+class Solution {
+    public boolean threeConsecutiveOdds(int[] arr) {
+        int st = 0, ed = 0;
+        int flag = -1;
+        for(int i = 0; i < arr.length; ){
+            if(arr[i] % 2 != 0){
+                if(i <= arr.length - 3){
+                    if(arr[i + 1] % 2 != 0 && arr[i + 2] % 2 != 0){
+                        return true;
+                    }else if(arr[i + 2] % 2 != 0){
+                        i += 2;
+                    }else{
+                        i += 3;
+                    }
+                }else{
+                    return false;
+                }
+            }else{
+                i ++;
+            }
+        }
+        return false;
+    }
+}

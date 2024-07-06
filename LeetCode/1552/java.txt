@@ -1,0 +1,37 @@
+class Solution {
+    public int maxDistance(int[] position, int m) {
+        Arrays.sort(position);
+        int len = position.length;
+        int diff = position[len - 1] - position[0];
+        int right = diff / (m - 1), left = 1;
+        int mid;
+        int ans = 1;
+        while(left <= right){
+            mid = left + (right - left) / 2;
+            //System.out.println(mid);
+            if(ifIsPossible(position, mid, m)){
+                ans = mid;
+                left = mid + 1;
+            }else{
+                right = mid - 1;
+            }
+        }
+        return ans;
+    }
+    boolean ifIsPossible(int[] position, int dis, int m){
+        int pre = position[0];
+        m --;
+        for(int i = 1; i < position.length; i ++){
+            if(m == 0)
+                return true;
+            //System.out.println("gap: " + (position[i] - pre));
+            if(position[i] - pre >= dis){
+                pre = position[i];
+                m --;
+            }
+        }
+        if(m == 0)
+            return true;
+        return false;
+    }
+}
